@@ -1,8 +1,8 @@
 import { Link, useParams } from 'react-router-dom'
-import { activities, getActivity, seasons } from '../activities.js'
-import PlaceCard from '../components/PlaceCard.jsx'
-import { ActivityCard } from './Activities.jsx'
-import NotFound from './NotFound.jsx'
+import { activities, getActivity, seasons } from '../activities'
+import PlaceCard from '../components/PlaceCard'
+import { ActivityCard } from './Activities'
+import NotFound from './NotFound'
 
 export default function Activity() {
   const { slug } = useParams()
@@ -38,7 +38,18 @@ export default function Activity() {
             ))}
           </div>
 
-          {activity.tips?.length > 0 && (
+          {activity.sections?.map((sec) => (
+            <div key={sec.title} className="places-section">
+              <h2>{sec.title}</h2>
+              <div className="places">
+                {sec.places.map((p) => (
+                  <PlaceCard key={p.name} place={p} />
+                ))}
+              </div>
+            </div>
+          ))}
+
+          {activity.tips && activity.tips.length > 0 && (
             <div className="tips">
               <h3>💡 Nos conseils</h3>
               <ul>

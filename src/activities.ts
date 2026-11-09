@@ -1,24 +1,10 @@
 // Activités et bonnes adresses autour de Sunny Lodge.
 // Pour ajouter une adresse : copiez un bloc { name: ..., } dans la liste `places` de l'activité.
-// Champs d'une adresse :
-//   name        nom affiché
-//   kind        petit libellé (école, location, station, sommet...)
-//   description texte libre
-//   distance    temps depuis la maison (facultatif)
-//   location    lieu ou adresse : sert à générer le lien « Itinéraire » vers Google Maps
-//   website     site internet (facultatif)
-//   instagram   lien Instagram (facultatif)
-//   hike        randonnée / vélo : { ascent (m), descent (m), distance (km), grade (pente), duration, type }
-//   icon        emoji affiché à la place de la photo tant qu'il n'y en a pas (facultatif)
-//   photo       photo de la carte, ex. '/randos/morgon.jpg' (fichier dans public/randos, format 3:2)
-//   parking     point de départ : { name, coords: [lat, lon] ou query, warning, tip }
-//   guide       lien vers la fiche détaillée
-//   features    liste de services / équipements (pastilles)
-//   phone       téléphone (facultatif)
-//   (activité) placesTitle : titre de la liste, ex. « Nos randos préférées »
-//   draft: true -> affiché comme « à compléter » (à retirer une fois les infos vérifiées)
+// Les champs possibles sont décrits (avec autocomplétion) dans src/types.ts.
 
-export const seasons = {
+import type { Activity, RestaurantCategory, Season, SeasonId } from './types'
+
+export const seasons: Record<SeasonId, Season> = {
 	hiver: {
 		label: "Hiver",
 		emoji: "❄️",
@@ -33,7 +19,7 @@ export const seasons = {
 	},
 };
 
-export const activities = [
+export const activities: Activity[] = [
 	// ───────────── HIVER ─────────────
 	{
 		slug: "ski-alpin",
@@ -51,27 +37,29 @@ export const activities = [
 		places: [
 			{
 				name: "Réallon",
-				kind: "Station · 1 560 m",
-				distance: "13 km · 20 min",
+				kind: "1 560 m",
+				icon: "⛷️",
+				distance: "20 min",
 				description:
-					"Station conviviale et très familiale. Au sommet, vue imprenable sur le lac de Serre-Ponçon !",
+					"La plus proche du gîte : une station conviviale et familiale, avec un forfait journée à moins de 30 € ! Du sommet, la vue sur le lac est imprenable.",
 				location: "Station de Réallon, 05160 Réallon",
 			},
 			{
 				name: "Les Orres",
-				kind: "Station · 1 550 – 2 720 m",
-				distance: "20 km · 30 min",
-				description:
-					"Station plus grande et plus sportive : un domaine suffisamment grand, varié et bien pentu… mais avec beaucoup de monde.",
+				kind: "1 550 – 2 720 m",
+				icon: "⛷️",
+				distance: "35 min",
+				description: "Grande station avec un domaine varié et assez pentu !",
 				location: "Les Orres 1650, 05200 Les Orres",
 				website: "https://www.lesorres.com",
 			},
 			{
 				name: "Crévoux",
-				kind: "Petite station",
-				distance: "25 km · 35 min",
+				kind: "1 600 m",
+				icon: "⛷️",
+				distance: "35 min",
 				description:
-					"Petite station avec seulement 2 télésièges. Idéale après une chute de neige fraîche : les pistes ne sont pas damées, génial pour le hors-piste !",
+					"Petit village-station authentique dans un vallon sauvage. Un domaine modeste, mais idéal pour le hors-piste : il n’est pas damé après une chute de neige fraîche !",
 				location: "Station de Crévoux, 05200 Crévoux",
 			},
 		],
@@ -251,13 +239,44 @@ export const activities = [
 					"https://geotrek-admin.ecrins-parcnational.fr/api/fr/treks/974239/le-meale.pdf",
 			},
 		],
+		sections: [
+			{
+				title: "Nos randonnées pour les enfants",
+				places: [
+					{
+						name: "Le Peuple des Oiseaux",
+						kind: "Réallon · sentier ludique",
+						icon: "🐦",
+						description:
+							"Une rando ludique avec des statues en bois grandeur nature, des jeux et des épreuves amusantes.",
+						location: "Le Peuple des Oiseaux, 05160 Réallon",
+					},
+					{
+						name: "Le Prince et le Berger",
+						kind: "Réallon · sentier ludique",
+						icon: "🤴",
+						description:
+							"Entre forêt de mélèzes, énigmes en bois, labyrinthe et tyrolienne, suivez l’histoire du Prince et du Berger.",
+						location: "Le Prince et le Berger, 05160 Réallon",
+					},
+					{
+						name: "Le Parcours des Fées",
+						kind: "Crévoux",
+						icon: "🧚",
+						description:
+							"Une balade facile au fond de la vallée de Crévoux, ponctuée d’œuvres d’art au cœur de la nature.",
+						location: "Parcours des Fées, La Chalp, 05200 Crévoux",
+					},
+				],
+			},
+		],
 	},
 	{
 		slug: "velo-de-route",
 		season: "ete",
 		emoji: "🚴",
 		title: "Vélo de route",
-		placesTitle: "Nos cols préférés",
+		placesTitle: "Les cols mythiques du Tour de France",
 		tagline: "Les cols mythiques du Tour de France",
 		intro:
 			"Les Hautes-Alpes sont le paradis des cyclistes : depuis Sunny Lodge, les plus grands cols des Alpes sont à portée de roue (ou de voiture, pour rejoindre le pied). Voici les incontournables de la région.",
@@ -276,7 +295,6 @@ export const activities = [
 				hike: {
 					ascent: "≈ 1 380",
 					distance: 31.5,
-					grade: "4,4 %",
 					type: "Depuis Guillestre",
 				},
 				parking: { name: "Guillestre (versant sud)", query: "Guillestre" },
@@ -290,7 +308,6 @@ export const activities = [
 				hike: {
 					ascent: "≈ 585",
 					distance: 8.5,
-					grade: "6,9 %",
 					type: "Depuis le Lautaret",
 				},
 				parking: { name: "Col du Lautaret", query: "Col du Lautaret" },
@@ -304,32 +321,9 @@ export const activities = [
 				hike: {
 					ascent: "≈ 850",
 					distance: 28,
-					grade: "3 %",
 					type: "Depuis Briançon",
 				},
 				parking: { name: "Briançon", query: "Briançon" },
-			},
-			{
-				name: "Col de l’Échelle",
-				kind: "Col · 1 762 m",
-				icon: "🚴",
-				description:
-					"Une belle balade par la vallée de la Clarée, l’une des plus belles des Alpes, avec une dernière partie en lacets bien pentue. Moins fréquenté que ses voisins.",
-				parking: { name: "Briançon", query: "Briançon" },
-			},
-			{
-				name: "Col du Granon",
-				kind: "Col · 2 413 m",
-				icon: "🚴",
-				description:
-					"Le plus raide de la liste : une pente régulière et sans répit, récemment rendu célèbre par le Tour de France. Panorama exceptionnel sur les Écrins au sommet.",
-				hike: {
-					ascent: "≈ 1 050",
-					distance: 11.5,
-					grade: "9 %",
-					type: "Depuis Saint-Chaffrey",
-				},
-				parking: { name: "Saint-Chaffrey", query: "Saint-Chaffrey" },
 			},
 		],
 	},
@@ -418,33 +412,37 @@ export const activities = [
 			{
 				name: "La Rochette",
 				icon: "🧗",
-				kind: "Site d’escalade",
+				kind: "Savines-le-Lac",
 				distance: "Juste derrière la maison",
 				description:
-					"Le site de grimpe le plus proche, accessible à pied depuis la maison.",
+					"Site accessible à pied depuis la maison avec une vue imprenable sur le lac ! Voies du 4a au 7b+ avec secteur d'initiation accessible et secteur perfectionnement plus exigeant.",
 				location: "La Rochette, Savines-le-Lac",
-				draft: true,
 			},
 			{
-				name: "La Roche (Ubaye)",
-				kind: "Site d’escalade",
+				name: "La Roche",
+				kind: "Ubaye",
+				distance: "35 min",
 				icon: "🧗",
-				description: "Site de grimpe côté Ubaye.",
+				description:
+					"Voies du 4a au 7a très adapté à l'initiation et à la découverte.",
 				location: "Escalade La Roche, Ubaye",
 			},
 			{
-				name: "Réotier",
-				kind: "Site d’escalade",
+				name: "Pinfol",
+				kind: "Réotier",
+				distance: "35 min",
 				icon: "🧗",
 				description:
-					"Un site de grimpe réputé de la vallée de la Durance, entre Embrun et Guillestre.",
+					"Voies sur calcaire adaptées à l'initiation et aux familles, avec des hauteurs allant de 5 à 28 mètres.",
 				location: "Site d’escalade, Réotier",
 			},
 			{
-				name: "Châteauroux-les-Alpes",
-				kind: "Site d’escalade",
+				name: "Roche Rousse",
+				kind: "Châteauroux-les-Alpes",
+				distance: "20 min",
 				icon: "🧗",
-				description: "Site de grimpe à Châteauroux-les-Alpes, à côté d’Embrun.",
+				description:
+					"Niché au pied de la forteresse Vauban de Mont Dauphin, ce spot unique propose plus de 100 voies (du 4c au 8b+) sur un rocher en poudingue, offrant une grimpe physique et originale sur des galets incrustés. ",
 				location: "Site d’escalade, Châteauroux-les-Alpes",
 			},
 		],
@@ -470,51 +468,53 @@ export const activities = [
 			},
 			{
 				name: "Chadenas",
-				kind: "Spot · plan d’eau d’Embrun",
+				kind: "Spot",
 				icon: "🪁",
 				description:
 					"Le spot du plan d’eau d’Embrun, plus abrité : parfait pour débuter.",
 				location: "Chadenas, Embrun",
 			},
 			{
-				name: "Plage de Crots",
+				name: "Crots beach",
 				kind: "Spot",
 				icon: "🪁",
 				description:
-					"Plage de Chanterenne, l’un des endroits les plus ventés du lac.",
+					"La plage de Chanterenne à Crots est le spot le plus venté du lac.",
 				location: "Plage de Chanterenne, Crots",
 			},
 			{
 				name: "Le Bus",
 				kind: "École de wingfoil · Duotone",
 				icon: "🏄",
-				description:
-					"École 100 % wingfoil, sur matériel Duotone, installée aux Eaux Douces.",
+				description: "École 100 % wingfoil aux Eaux Douces.",
 				location: "Les Eaux Douces, Lac de Serre-Ponçon",
+				instagram: "https://www.instagram.com/restaurantlebus_spw/",
 			},
 			{
 				name: "Altitude Kite",
-				kind: "École de kite & wing · F-One",
+				kind: "École de kite & wingfoil · F-One",
 				icon: "🏄",
-				description:
-					"Cours de kitesurf et de wingfoil sur matériel F-One, aux Eaux Douces.",
+				description: "Ecole de kitesurf et de wingfoil aux Eaux Douces.",
 				location: "Les Eaux Douces, Lac de Serre-Ponçon",
+				instagram: "https://www.instagram.com/altitudekite05/",
 			},
 			{
 				name: "Le Spot",
 				kind: "École de wing & windsurf · AFS",
 				icon: "🏄",
-				description:
-					"École de wingfoil et de planche à voile, sur matériel AFS.",
+				description: "École de wingfoil et de planche à voile à Crots.",
 				location: "Le Spot Wingfoil Windsurf School, Crots",
+				instagram: "https://www.instagram.com/le_spot_serreponcon/",
 			},
 			{
-				name: "Magasin de location à Crots",
-				kind: "Location",
+				name: "La boutique du surfer",
+				kind: "Shop",
 				icon: "🏄",
-				description: "Location de matériel de glisse.",
+				description:
+					"Boutique de vente et location de matos de glisse tenue par des passionés !",
 				location: "Crots, 05200",
-				draft: true,
+				instagram: "https://www.instagram.com/laboutiquedusurfer05/",
+				//draft: true,
 			},
 		],
 	},
@@ -603,7 +603,7 @@ export const activities = [
 ];
 
 // Restaurants & bars que nous recommandons.
-export const restaurantCategories = [
+export const restaurantCategories: RestaurantCategory[] = [
 	{
 		title: "Au bord de l’eau",
 		emoji: "🏖️",
@@ -692,4 +692,4 @@ export const restaurantCategories = [
 	},
 ];
 
-export const getActivity = (slug) => activities.find((a) => a.slug === slug);
+export const getActivity = (slug: string | undefined): Activity | undefined => activities.find((a) => a.slug === slug);

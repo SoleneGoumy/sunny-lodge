@@ -1,13 +1,15 @@
-const mapsSearch = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+import type { Parking, Place } from '../types'
 
-function parkingUrl(parking) {
+const mapsSearch = (q: string): string => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`
+
+function parkingUrl(parking: Parking): string {
   if (parking.coords) return mapsSearch(parking.coords.join(','))
   return mapsSearch(parking.query || parking.name)
 }
 
-const formatKm = (km) => `${String(km).replace('.', ',')} km`
+const formatKm = (km: number): string => `${String(km).replace('.', ',')} km`
 
-export default function PlaceCard({ place }) {
+export default function PlaceCard({ place }: { place: Place }) {
   const mapsUrl = !place.parking && place.location ? mapsSearch(place.location) : null
   const hike = place.hike
   const showMedia = Boolean(place.photo || hike || place.icon)
@@ -37,7 +39,7 @@ export default function PlaceCard({ place }) {
       <h3>{place.name}</h3>
       {place.description && <p>{place.description}</p>}
 
-      {place.features?.length > 0 && (
+      {place.features && place.features.length > 0 && (
         <ul className="features">
           {place.features.map((f) => (
             <li key={f}>{f}</li>

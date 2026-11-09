@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
-import { activities, seasons } from '../activities.js'
+import { activities, seasons } from '../activities'
+import type { Activity, SeasonId } from '../types'
 
-export function ActivityCard({ activity }) {
+export function ActivityCard({ activity }: { activity: Activity }) {
   return (
     <Link to={`/activites/${activity.slug}`} className={`activity-card activity-card--${activity.season}`}>
       <span className="activity-card__emoji" aria-hidden="true">{activity.emoji}</span>

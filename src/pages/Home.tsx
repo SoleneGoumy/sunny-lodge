@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import {
   AIRBNB_URL,
@@ -10,8 +10,8 @@ import {
   reviews,
   ratings,
   nearby,
-} from '../data.js'
-import { activities, seasons } from '../activities.js'
+} from '../data'
+import { activities, seasons } from '../activities'
 
 function Hero() {
   return (
@@ -110,16 +110,16 @@ function Bedrooms() {
 }
 
 function Gallery() {
-  const [index, setIndex] = useState(null)
+  const [index, setIndex] = useState<number | null>(null)
   const [showAll, setShowAll] = useState(false)
   const visible = showAll ? photos : photos.slice(0, 9)
 
   useEffect(() => {
     if (index === null) return
-    const onKey = (e) => {
+    const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setIndex(null)
-      if (e.key === 'ArrowRight') setIndex((i) => (i + 1) % photos.length)
-      if (e.key === 'ArrowLeft') setIndex((i) => (i - 1 + photos.length) % photos.length)
+      if (e.key === 'ArrowRight') setIndex((i) => ((i ?? 0) + 1) % photos.length)
+      if (e.key === 'ArrowLeft') setIndex((i) => ((i ?? 0) - 1 + photos.length) % photos.length)
     }
     document.body.style.overflow = 'hidden'
     window.addEventListener('keydown', onKey)
@@ -158,7 +158,7 @@ function Gallery() {
             aria-label="Photo précédente"
             onClick={(e) => {
               e.stopPropagation()
-              setIndex((i) => (i - 1 + photos.length) % photos.length)
+              setIndex((i) => ((i ?? 0) - 1 + photos.length) % photos.length)
             }}
           >
             ‹
@@ -169,7 +169,7 @@ function Gallery() {
             aria-label="Photo suivante"
             onClick={(e) => {
               e.stopPropagation()
-              setIndex((i) => (i + 1) % photos.length)
+              setIndex((i) => ((i ?? 0) + 1) % photos.length)
             }}
           >
             ›
@@ -284,9 +284,9 @@ function Location() {
 
 function Booking() {
   const [form, setForm] = useState({ name: '', arrival: '', departure: '', guests: '', message: '' })
-  const update = (k) => (e) => setForm({ ...form, [k]: e.target.value })
+  const update = (k: keyof typeof form) => (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value })
 
-  const onSubmit = (e) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault()
     const subject = `Demande de séjour – ${form.name}`
     const body = [
@@ -339,7 +339,7 @@ function Booking() {
             </label>
             <label>
               Message
-              <textarea rows="4" value={form.message} onChange={update('message')} />
+              <textarea rows={4} value={form.message} onChange={update('message')} />
             </label>
             <button className="btn" type="submit">Envoyer la demande</button>
           </form>

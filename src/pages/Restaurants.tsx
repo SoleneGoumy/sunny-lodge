@@ -1,5 +1,5 @@
-import { restaurantCategories } from '../activities.js'
-import PlaceCard from '../components/PlaceCard.jsx'
+import { restaurantCategories } from '../activities'
+import PlaceCard from '../components/PlaceCard'
 
 export default function Restaurants() {
   return (

@@ -337,3 +337,4 @@ h1 > span[aria-hidden], h2 > span[aria-hidden] { margin-right: 0.3em; }
 .place__media .place__top { position: absolute; top: 12px; right: 12px; left: 12px; margin: 0; justify-content: flex-end; gap: 6px; }
 .place__media .tag, .place__media .place__distance { background: rgba(255, 255, 255, 0.92); backdrop-filter: blur(4px); box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12); }
 .place__media .place__distance { color: var(--lake-dark); font-size: 0.78rem; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+.places-section { margin-top: 56px; }

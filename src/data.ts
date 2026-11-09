@@ -1,4 +1,7 @@
 // Toutes les infos du gîte sont centralisées ici : modifiez ce fichier pour mettre le site à jour.
+// Les types (autocomplétion) sont dans src/types.ts.
+
+import type { AmenityGroup, Bedroom, Highlight, NearbyItem, Photo, Rating, Review } from './types'
 
 export const AIRBNB_URL = 'https://www.airbnb.fr/rooms/1592175823173427125'
 
@@ -6,11 +9,11 @@ export const AIRBNB_URL = 'https://www.airbnb.fr/rooms/1592175823173427125'
 export const CONTACT_EMAIL = ''
 
 const base = 'https://a0.muscache.com/im/pictures/hosting'
-const img = (path) => `${base}/${path}?im_w=1440`
+const img = (path: string): string => `${base}/${path}?im_w=1440`
 
 // Photos de l'annonce Airbnb. Pour plus de fiabilité, vous pouvez les copier dans /public/photos
 // et remplacer les URL par '/photos/nom.jpg'.
-export const photos = [
+export const photos: Photo[] = [
   'Hosting-1592175823173427125/original/aff61be9-44fe-42bc-b406-c77c22b9bda2.jpeg',
   'Hosting-1592175823173427125/original/498fbe69-9dd4-4c42-8081-8f03d2bf3aa0.jpeg',
   'Hosting-1592175823173427125/original/2c09fb31-3c8f-4679-986c-f832020ea6aa.jpeg',
@@ -29,14 +32,14 @@ export const photos = [
   'Hosting-1592175823173427125/original/c3489f96-1927-423b-a90a-f815e58b5c08.jpeg',
 ].map((p, i) => ({ src: img(p), alt: `Sunny Lodge – photo ${i + 1}` }))
 
-export const highlights = [
+export const highlights: Highlight[] = [
   { value: '10', label: 'voyageurs' },
   { value: '4', label: 'chambres' },
   { value: '7', label: 'lits' },
   { value: '2', label: 'salles de bain' },
 ]
 
-export const bedrooms = [
+export const bedrooms: Bedroom[] = [
   {
     name: 'Chambre 1',
     floor: 'Rez-de-chaussée',
@@ -63,7 +66,7 @@ export const bedrooms = [
   },
 ]
 
-export const amenities = [
+export const amenities: AmenityGroup[] = [
   {
     title: 'Cuisine & repas',
     icon: '🍳',
@@ -112,7 +115,7 @@ export const amenities = [
   },
 ]
 
-export const reviews = [
+export const reviews: Review[] = [
   {
     name: 'Thomas',
     date: 'septembre 2026',
@@ -135,7 +138,7 @@ export const reviews = [
   },
 ]
 
-export const ratings = [
+export const ratings: Rating[] = [
   ['Propreté', '4,9'],
   ['Précision', '5,0'],
   ['Arrivée', '4,9'],
@@ -144,7 +147,7 @@ export const ratings = [
   ['Qualité-prix', '4,6'],
 ]
 
-export const nearby = [
+export const nearby: NearbyItem[] = [
   { icon: '🏖️', title: 'Lac de Serre-Ponçon', text: 'Plages, baignade, paddle et voile à 5 minutes en voiture.' },
   { icon: '⛷️', title: 'Station de Réallon', text: 'Ski alpin et activités neige à 20 minutes.' },
   { icon: '🥾', title: 'Randonnées', text: 'Sentiers au départ du village, vues sur le lac et les sommets.' },
