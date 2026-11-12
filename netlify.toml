@@ -10,6 +10,13 @@
   status = 301
   force = true
 
+# L'ancienne adresse Netlify renvoie vers le domaine
+[[redirects]]
+  from = "https://sunny-lodge.netlify.app/*"
+  to = "https://sunny-lodge.fr/:splat"
+  status = 301
+  force = true
+
 # Application React : toutes les adresses renvoient vers index.html
 [[redirects]]
   from = "/*"

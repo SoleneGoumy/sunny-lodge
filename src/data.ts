@@ -72,9 +72,10 @@ export const aboutPhotos: Photo[] = [
 	{ src: "/maison/terrasse.jpg", alt: "La terrasse" },
 ];
 
-/** Section « Vos hôtes » (ajoutez `photo: "/maison/hotes.jpg"` quand la photo est dans public/). */
+/** Section « Vos hôtes ». */
 export const hosts: Hosts = {
 	names: "Solène & Sylvain",
+	photo: "/maison/sylvain-solene.jpg",
 	initials: "S & S",
 	text: [
 		"Nous habitons juste à côté de Sunny Lodge et nous sommes passionnés par notre région, entre lac et montagnes.",

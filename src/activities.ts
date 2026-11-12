@@ -328,7 +328,7 @@ export const activities: Activity[] = [
 		slug: "velo",
 		season: "ete",
 		emoji: "🚴",
-		title: "Vélo de route & VTT",
+		title: "Vélo & VTT",
 		placesTitle: "Les cols mythiques du Tour de France",
 		tagline: "Cols mythiques et single tracks avec vue sur le lac",
 		intro:
@@ -793,6 +793,7 @@ export const restaurantCategories: RestaurantCategory[] = [
 			},
 			{
 				name: "Le Bus",
+				photo: "/restaurants/le-bus.jpg",
 				kind: "Plage des Eaux Douces",
 				description:
 					"Sur la plage des Eaux Douces à Crots : cuisine colorée, avec vue sur les wingfoils.",

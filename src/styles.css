@@ -277,27 +277,6 @@ a {
 }
 
 /* About */
-.floors {
-	display: grid;
-	gap: 14px;
-	margin-top: 28px;
-}
-.floor {
-	background: var(--white);
-	border-radius: var(--radius);
-	padding: 18px 22px;
-	box-shadow: var(--shadow);
-	border-left: 4px solid var(--sun);
-}
-.floor h3 {
-	margin-bottom: 0.3em;
-	color: var(--lake);
-}
-.floor p {
-	margin: 0;
-	color: var(--muted);
-	font-size: 0.95rem;
-}
 .mosaic {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
@@ -1119,23 +1098,23 @@ a {
    (dense derrière le texte en haut, transparent en bas pour laisser voir la photo). */
 .teaser__card--hiver {
 	background:
-		linear-gradient(170deg, rgba(29, 53, 87, 0.92) 0%, rgba(29, 53, 87, 0.7) 50%, rgba(29, 53, 87, 0.1) 100%),
+		linear-gradient(170deg, rgba(29, 53, 87, 0.78) 0%, rgba(29, 53, 87, 0.45) 35%, rgba(29, 53, 87, 0) 65%),
 		#1d3557 url("/activities/en-hiver.jpg") center / cover;
 }
 .teaser__card--ete {
 	background:
-		linear-gradient(170deg, rgba(31, 95, 102, 0.9) 0%, rgba(31, 95, 102, 0.65) 50%, rgba(31, 95, 102, 0.1) 100%),
+		linear-gradient(170deg, rgba(31, 95, 102, 0.75) 0%, rgba(31, 95, 102, 0.42) 35%, rgba(31, 95, 102, 0) 65%),
 		#1f5f66 url("/activities/en-ete.jpg") center / cover;
 }
 .teaser__card--hiver,
 .teaser__card--ete {
-	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 12px rgba(0, 0, 0, 0.35);
 }
 .teaser__card--food {
 	background:
-		linear-gradient(170deg, rgba(122, 58, 32, 0.92) 0%, rgba(122, 58, 32, 0.65) 50%, rgba(122, 58, 32, 0.1) 100%),
+		linear-gradient(170deg, rgba(122, 58, 32, 0.78) 0%, rgba(122, 58, 32, 0.45) 35%, rgba(122, 58, 32, 0) 65%),
 		#7a3a20 url("/restaurants/le-duo-tapas.jpeg") center / cover;
-	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7), 0 0 12px rgba(0, 0, 0, 0.35);
 }
 .teaser__card p {
 	opacity: 0.9;

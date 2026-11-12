@@ -69,10 +69,11 @@ function About() {
 					<p className="eyebrow">La maison</p>
 					<h2>Plein sud, grandes baies vitrées, vue sur les sommets</h2>
 					<p>
-						Maison paisible pour un séjour détente à Savines-le-Lac, dans un
-						quartier calme à moins de 5 minutes en voiture du centre du village
-						et des plages du lac de Serre-Ponçon, et à 20 minutes de la station
-						de ski de Réallon.
+						La Maison Sunny Lodge est une location pouvant accueillir jusqu'à{" "}
+						<strong>10 personnes</strong> pour un séjour à Savines-le-Lac, dans
+						un <strong>quartier calme et paisible</strong>. A moins de 5 minutes
+						du village et des plages et à 15 minutes des pistes de ski, elle est
+						idéalement située pour des vacances inoubliables !
 					</p>
 					<p>
 						Grâce à son exposition plein sud, la maison est baignée de soleil en
@@ -80,22 +81,6 @@ function About() {
 						sur une grande terrasse offrant une vue magnifique sur les montagnes
 						environnantes.
 					</p>
-					<div className="floors">
-						<div className="floor">
-							<h3>Rez-de-chaussée</h3>
-							<p>
-								Séjour, salon et cuisine ouverte · 1 chambre lit double · salle
-								de bain · WC · buanderie
-							</p>
-						</div>
-						<div className="floor">
-							<h3>Étage</h3>
-							<p>
-								Mezzanine coin lecture vue lac · 3 chambres (dont 1 avec lits
-								superposés) · salle de bain · WC
-							</p>
-						</div>
-					</div>
 				</div>
 				<div className="mosaic">
 					{aboutPhotos.map((p) => (
@@ -258,6 +243,7 @@ function PhotoSection({
 							className="gallery__item"
 							onClick={() => setIndex(i)}
 							aria-label={`Agrandir : ${p.alt}`}
+							type="button"
 						>
 							<img src={p.src} alt={p.alt} loading="lazy" />
 						</button>
@@ -278,6 +264,7 @@ function PhotoSection({
 					<button
 						className="lightbox__nav lightbox__nav--prev"
 						aria-label="Photo précédente"
+						type="button"
 						onClick={(e) => {
 							e.stopPropagation();
 							setIndex((i) => ((i ?? 0) - 1 + photos.length) % photos.length);
@@ -293,6 +280,7 @@ function PhotoSection({
 					<button
 						className="lightbox__nav lightbox__nav--next"
 						aria-label="Photo suivante"
+						type="button"
 						onClick={(e) => {
 							e.stopPropagation();
 							setIndex((i) => ((i ?? 0) + 1) % photos.length);
