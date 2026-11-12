@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Activities from './pages/Activities'
 import Activity from './pages/Activity'
 import Restaurants from './pages/Restaurants'
+import Visits from './pages/Visits'
 import NotFound from './pages/NotFound'
 import './styles.css'
 
@@ -17,6 +18,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
           <Route index element={<Home />} />
           <Route path="activites" element={<Activities />} />
           <Route path="activites/:slug" element={<Activity />} />
+          <Route path="visites" element={<Visits />} />
           <Route path="restaurants" element={<Restaurants />} />
           <Route path="*" element={<NotFound />} />
         </Route>

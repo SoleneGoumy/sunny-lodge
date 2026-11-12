@@ -6,6 +6,7 @@ const NAV = [
   ['/#chambres', 'Chambres'],
   ['/#galerie', 'Photos'],
   ['/activites', 'Activités'],
+  ['/visites', 'Visites'],
   ['/restaurants', 'Restaurants'],
   ['/#acces', 'Accès'],
 ]
@@ -94,6 +95,7 @@ function Footer() {
         <nav className="footer__nav">
           <Link to="/">Accueil</Link>
           <Link to="/activites">Activités</Link>
+          <Link to="/visites">Visites</Link>
           <Link to="/restaurants">Restaurants</Link>
         </nav>
         <p className="muted">© {new Date().getFullYear()} Sunny Lodge · Savines-le-Lac</p>

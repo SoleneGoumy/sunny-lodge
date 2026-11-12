@@ -2,6 +2,8 @@
 // Ils donnent l'autocomplétion et signalent les fautes de frappe
 // quand vous complétez activities.ts ou data.ts.
 
+import type { PhotoPath } from './photos.generated'
+
 /** Saison d'une activité. */
 export type SeasonId = 'hiver' | 'ete'
 
@@ -53,8 +55,11 @@ export interface Place {
   distance?: string
   /** Lieu ou adresse : génère le lien « Itinéraire » (si pas de `parking`). */
   location?: string
-  /** Photo de la carte, ex. '/randos/morgon.jpg' (fichier dans public/, format 3:2). */
-  photo?: string
+  /**
+   * Photo de la carte : chemin d'une image de public/, ex. '/randos/morgon.jpg' (format 3:2).
+   * Tapez '/' entre les guillemets pour voir la liste des photos disponibles.
+   */
+  photo?: PhotoPath
   /** Emoji affiché à la place de la photo tant qu'il n'y en a pas. */
   icon?: string
   hike?: HikeStats
@@ -81,6 +86,11 @@ export interface Activity {
   slug: string
   season: SeasonId
   emoji: string
+  /**
+   * Photo de la carte sur la page Activités (chemin dans public/, format 3:2).
+   * Tapez '/' entre les guillemets pour voir la liste.
+   */
+  photo?: PhotoPath
   title: string
   /** Titre de la liste principale, ex. « Nos randos préférées ». */
   placesTitle?: string
@@ -128,10 +138,23 @@ export interface AmenityGroup {
   items: string[]
 }
 
+/** Plateforme d'où vient un avis (un badge avec son logo est affiché). */
+export type ReviewSource = 'airbnb' | 'gites-de-france' | 'google'
+
+export interface ReviewSourceInfo {
+  /** Nom affiché dans le badge. */
+  label: string
+  /** Page où lire tous les avis (laisser vide pour masquer le lien). */
+  url?: string
+}
+
 export interface Review {
   name: string
+  /** Mois de l'avis, ex. 'juillet 2026'. */
   date: string
   text: string
+  /** Plateforme d'origine de l'avis. */
+  source: ReviewSource
 }
 
 /** [critère, note], ex. ['Propreté', '4,9'] */
@@ -141,4 +164,32 @@ export interface NearbyItem {
   icon: string
   title: string
   text: string
+}
+
+// ───────── Disponibilités (public/availability.json) ─────────
+
+/** Période occupée : nuits du `start` inclus au `end` exclu (jour du départ). */
+export interface BlockedPeriod {
+  start: string
+  end: string
+  source: 'airbnb' | 'gites-de-france' | 'manuel'
+}
+
+export interface Availability {
+  /** Date de la dernière synchronisation des calendriers. */
+  updatedAt: string | null
+  blocked: BlockedPeriod[]
+}
+
+export interface BookingSettings {
+  /** Clé d'accès Web3Forms (web3forms.com) : les demandes arrivent par e-mail. */
+  web3formsKey: string
+  maxGuests: number
+  /** Nombre de nuits minimum pour une demande. */
+  minNights: number
+  /**
+   * Périodes à bloquer à la main, en plus des calendriers synchronisés
+   * (fermeture, réglages Airbnb non exportés…). `end` = premier jour libre.
+   */
+  manualBlocks: Omit<BlockedPeriod, 'source'>[]
 }

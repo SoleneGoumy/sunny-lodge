@@ -2,7 +2,7 @@
 // Pour ajouter une adresse : copiez un bloc { name: ..., } dans la liste `places` de l'activité.
 // Les champs possibles sont décrits (avec autocomplétion) dans src/types.ts.
 
-import type { Activity, RestaurantCategory, Season, SeasonId } from './types'
+import type { Activity, RestaurantCategory, Season, SeasonId } from "./types";
 
 export const seasons: Record<SeasonId, Season> = {
 	hiver: {
@@ -25,11 +25,12 @@ export const activities: Activity[] = [
 		slug: "ski-alpin",
 		season: "hiver",
 		emoji: "⛷️",
+		photo: "/ski/les-orres.jpg",
 		title: "Ski alpin & snowboard",
 		placesTitle: "Nos stations préférées",
 		tagline: "Réallon à 20 minutes, Les Orres et Crévoux à 30-35 minutes",
 		intro:
-			"Depuis Sunny Lodge, on choisit sa station selon l'envie du jour : la petite station familiale de Réallon juste au-dessus du lac, le grand domaine des Orres, ou le charme authentique de Crévoux.",
+			"Sunny Lodge est à 15 minutes de la petite station familiale de Réallon mais vous pouvez également rejoindre le grand domaine des Orres, ou le charme authentique de Crévoux.",
 		tips: [
 			"Pensez à vérifier l’enneigement et l’ouverture des routes avant de partir.",
 			"Équipements spéciaux (chaînes ou chaussettes) obligatoires dans les Hautes-Alpes en hiver.",
@@ -43,13 +44,16 @@ export const activities: Activity[] = [
 				description:
 					"La plus proche du gîte : une station conviviale et familiale, avec un forfait journée à moins de 30 € ! Du sommet, la vue sur le lac est imprenable.",
 				location: "Station de Réallon, 05160 Réallon",
+				website: "https://www.lesorres.com",
 			},
 			{
 				name: "Les Orres",
+				photo: "/ski/les-orres.jpg",
 				kind: "1 550 – 2 720 m",
 				icon: "⛷️",
 				distance: "35 min",
-				description: "Grande station avec un domaine varié et assez pentu !",
+				description:
+					"Grande station avec un domaine varié et assez pentu ! Patinoire, pôle innovation avec simulateur de ski, escalade, simulateurs VR (VTT, ski, kayak, parapente, speed riding)",
 				location: "Les Orres 1650, 05200 Les Orres",
 				website: "https://www.lesorres.com",
 			},
@@ -61,6 +65,7 @@ export const activities: Activity[] = [
 				description:
 					"Petit village-station authentique dans un vallon sauvage. Un domaine modeste, mais idéal pour le hors-piste : il n’est pas damé après une chute de neige fraîche !",
 				location: "Station de Crévoux, 05200 Crévoux",
+				website: "https://www.lesorres.com",
 			},
 		],
 	},
@@ -68,6 +73,7 @@ export const activities: Activity[] = [
 		slug: "ski-de-randonnee",
 		season: "hiver",
 		emoji: "🏔️",
+		photo: "/activities/ski-de-randonnee.jpg",
 		title: "Ski de randonnée",
 		placesTitle: "Nos itinéraires préférés",
 		tagline: "Monter à la force des jambes, descendre en poudreuse",
@@ -92,6 +98,7 @@ export const activities: Activity[] = [
 			},
 			{
 				name: "La Ratelle",
+				photo: "/ski-rando/ratelle.jpg",
 				kind: "Crévoux",
 				distance: "35 min",
 				description:
@@ -153,11 +160,49 @@ export const activities: Activity[] = [
 		],
 	},
 
+	{
+		slug: "chiens-de-traineau",
+		season: "hiver",
+		emoji: "🐕",
+		title: "Chiens de traîneau",
+		placesTitle: "Nos mushers préférés",
+		tagline: "Glisser dans la neige au rythme de la meute",
+		intro:
+			"Une expérience inoubliable pour petits et grands : un baptême en traîneau tiré par une meute de chiens nordiques, au cœur des forêts enneigées, ou une initiation à la conduite d’attelage.",
+		tips: [
+			"Réservez à l’avance pendant les vacances scolaires, les places partent vite.",
+			"Habillez-vous chaudement : on reste assis dans le traîneau pendant la balade.",
+		],
+		places: [
+			{
+				name: "Crévoux",
+				kind: "Chiens de traîneau",
+				distance: "35 min",
+				icon: "🐕",
+				description:
+					"Sorties en traîneau à plus de 1 600 m d’altitude, au cœur du massif du Parpaillon.",
+				location: "Station de Crévoux, 05200 Crévoux",
+				draft: true,
+			},
+			{
+				name: "Réallon",
+				kind: "Chiens de traîneau",
+				distance: "20 min",
+				icon: "🐕",
+				description:
+					"Balades en chiens de traîneau à la station, la plus proche de la maison.",
+				location: "Station de Réallon, 05160 Réallon",
+				draft: true,
+			},
+		],
+	},
+
 	// ───────────── ÉTÉ ─────────────
 	{
 		slug: "randonnee",
 		season: "ete",
 		emoji: "🥾",
+		photo: "/randos/mont-guillaume.jpeg",
 		title: "Randonnée",
 		placesTitle: "Nos randos préférées",
 		tagline: "Des sommets avec le lac à vos pieds",
@@ -185,6 +230,7 @@ export const activities: Activity[] = [
 			{
 				name: "Mont Guillaume",
 				kind: "Sommet · 2 542 m",
+				photo: "/randos/mont-guillaume.jpeg",
 				description:
 					"Avec sa chapelle au sommet, l’incontournable au-dessus d’Embrun : un panorama à 360° sur le lac, les Écrins et la vallée de la Durance.",
 				hike: { ascent: 953, distance: 14.1, duration: "5 h 30" },
@@ -198,7 +244,7 @@ export const activities: Activity[] = [
 			{
 				name: "Aiguilles de Chabrières",
 				photo: "/randos/chabrieres.jpg",
-				kind: "Tour · 2 351 m",
+				kind: "Sommet · 2 351 m",
 				description:
 					"Le tour des aiguilles rocheuses qui dominent Réallon, avec passage par la brèche des Aiguilles. Paysages minéraux spectaculaires.",
 				hike: { ascent: 844, distance: 11.2, duration: "4 h 30" },
@@ -245,6 +291,8 @@ export const activities: Activity[] = [
 				places: [
 					{
 						name: "Le Peuple des Oiseaux",
+						photo: "/randos/peuple-des-oiseaux.jpg",
+						distance: "20 min",
 						kind: "Réallon · sentier ludique",
 						icon: "🐦",
 						description:
@@ -253,7 +301,9 @@ export const activities: Activity[] = [
 					},
 					{
 						name: "Le Prince et le Berger",
+						photo: "/randos/le-prince-et-le-berger.jpg",
 						kind: "Réallon · sentier ludique",
+						distance: "20 min",
 						icon: "🤴",
 						description:
 							"Entre forêt de mélèzes, énigmes en bois, labyrinthe et tyrolienne, suivez l’histoire du Prince et du Berger.",
@@ -261,7 +311,9 @@ export const activities: Activity[] = [
 					},
 					{
 						name: "Le Parcours des Fées",
-						kind: "Crévoux",
+						kind: "Crévoux · sentier ludique",
+						distance: "43 min",
+						photo: "/randos/parcours-des-fees.jpeg",
 						icon: "🧚",
 						description:
 							"Une balade facile au fond de la vallée de Crévoux, ponctuée d’œuvres d’art au cœur de la nature.",
@@ -272,18 +324,20 @@ export const activities: Activity[] = [
 		],
 	},
 	{
-		slug: "velo-de-route",
+		slug: "velo",
 		season: "ete",
 		emoji: "🚴",
-		title: "Vélo de route",
+		title: "Vélo de route & VTT",
 		placesTitle: "Les cols mythiques du Tour de France",
-		tagline: "Les cols mythiques du Tour de France",
+		tagline: "Cols mythiques et single tracks avec vue sur le lac",
 		intro:
-			"Les Hautes-Alpes sont le paradis des cyclistes : depuis Sunny Lodge, les plus grands cols des Alpes sont à portée de roue (ou de voiture, pour rejoindre le pied). Voici les incontournables de la région.",
+			"Les Hautes-Alpes sont le paradis des cyclistes : sur la route, les plus grands cols des Alpes sont à portée de roue (ou de voiture, pour rejoindre le pied) ; en VTT, forêts de mélèzes, pistes forestières et single tracks offrent de superbes balades avec le lac de Serre-Ponçon en toile de fond.",
 		tips: [
 			"Partez tôt : moins de circulation, moins de chaleur, et les orages arrivent souvent l’après-midi.",
 			"Prévoyez un coupe-vent pour la descente, il fait vite frais au-dessus de 2 000 m.",
 			"Certains cols sont fermés en hiver et au printemps : vérifiez l’ouverture avant de partir.",
+			"En VTT, les sentiers sont partagés avec les randonneurs : ralentissez et prévenez à leur approche.",
+			"Pour l’enduro de Joubelle, vérifiez l’ouverture du télésiège de Réallon.",
 		],
 		places: [
 			{
@@ -295,7 +349,6 @@ export const activities: Activity[] = [
 				hike: {
 					ascent: "≈ 1 380",
 					distance: 31.5,
-					type: "Depuis Guillestre",
 				},
 				parking: { name: "Guillestre (versant sud)", query: "Guillestre" },
 			},
@@ -308,7 +361,6 @@ export const activities: Activity[] = [
 				hike: {
 					ascent: "≈ 585",
 					distance: 8.5,
-					type: "Depuis le Lautaret",
 				},
 				parking: { name: "Col du Lautaret", query: "Col du Lautaret" },
 			},
@@ -321,78 +373,66 @@ export const activities: Activity[] = [
 				hike: {
 					ascent: "≈ 850",
 					distance: 28,
-					type: "Depuis Briançon",
 				},
 				parking: { name: "Briançon", query: "Briançon" },
 			},
 		],
-	},
-	{
-		slug: "vtt",
-		season: "ete",
-		emoji: "🚵",
-		title: "VTT",
-		placesTitle: "Nos balades VTT préférées",
-		tagline: "Single tracks en forêt et vues sur le lac",
-		intro:
-			"Entre forêts de mélèzes, pistes forestières et single tracks, les environs de Savines-le-Lac offrent de superbes balades VTT, toujours avec le lac de Serre-Ponçon en toile de fond.",
-		tips: [
-			"Les sentiers sont partagés avec les randonneurs : ralentissez et prévenez à leur approche.",
-			"Pour l’enduro de Joubelle, vérifiez l’ouverture du télésiège de Réallon.",
-		],
-		places: [
+		sections: [
 			{
-				name: "Belvédère de la Para",
-				kind: "Embrun",
-				icon: "🚵",
-				description:
-					"Boucle sportive sur les flancs du Mont Guillaume, entre larges pistes forestières et sentes en forêt, avec un panorama splendide sur le lac depuis le belvédère.",
-				hike: { ascent: 1068, distance: 16.6, duration: "3 h", type: "Boucle" },
-				parking: {
-					name: "Parking de la Porte de la Forêt (Embrun)",
-					coords: [44.5936455, 6.4765732],
-				},
-				guide:
-					"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5652/n4-les-fontainiers.pdf",
-			},
-			{
-				name: "Cabane de Joubelle & lac de Saint-Apollinaire",
-				kind: "Réallon",
-				icon: "🚵",
-				description:
-					"Boucle facile et contemplative entre le lac de Saint-Apollinaire et la station de Réallon. Pause à la cabane de Joubelle (fontaine et tables), puis descente plus technique vers le lac.",
-				hike: {
-					ascent: 447,
-					distance: 8.6,
-					duration: "1 h 30",
-					type: "Boucle",
-				},
-				parking: {
-					name: "Lac de Saint-Apollinaire",
-					coords: [44.5622517, 6.3460207],
-				},
-				guide:
-					"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5639/n23-le-lac-de-saint-apollinaire.pdf",
-			},
-			{
-				name: "Enduro de Joubelle",
-				kind: "Réallon · descente",
-				icon: "🚵",
-				description:
-					"Un vrai slalom entre pins et mélèzes depuis le sommet de Réallon, en single track jusqu’au lac de Saint-Apollinaire en passant par la cabane de Joubelle.",
-				hike: {
-					descent: 740,
-					distance: 3.7,
-					duration: "30 min",
-					type: "Descente",
-				},
-				parking: {
-					name: "Parking de la station de Réallon",
-					coords: [44.5758029, 6.3618725],
-					tip: "Montée en télésiège de Chabrières jusqu’au départ.",
-				},
-				guide:
-					"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5646/n29-enduro-de-joubelle.pdf",
+				title: "Nos balades VTT préférées",
+				places: [
+					{
+						name: "Belvédère de la Para",
+						kind: "VTT",
+						icon: "🚵",
+						description:
+							"Boucle sportive sur les flancs du Mont Guillaume, entre larges pistes forestières et sentes en forêt, avec un panorama splendide sur le lac depuis le belvédère.",
+						hike: { ascent: 1068, distance: 16.6, duration: "3 h" },
+						parking: {
+							name: "Parking de la Porte de la Forêt (Embrun)",
+							coords: [44.5936455, 6.4765732],
+						},
+						guide:
+							"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5652/n4-les-fontainiers.pdf",
+					},
+					{
+						name: "Cabane de Joubelle & lac de Saint-Apollinaire",
+						kind: "VTT",
+						icon: "🚵",
+						description:
+							"Boucle facile et contemplative entre le lac de Saint-Apollinaire et la station de Réallon. Pause à la cabane de Joubelle (fontaine et tables), puis descente plus technique vers le lac.",
+						hike: {
+							ascent: 447,
+							distance: 8.6,
+							duration: "1 h 30",
+						},
+						parking: {
+							name: "Lac de Saint-Apollinaire",
+							coords: [44.5622517, 6.3460207],
+						},
+						guide:
+							"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5639/n23-le-lac-de-saint-apollinaire.pdf",
+					},
+					{
+						name: "Enduro de Joubelle",
+						kind: "VTT descente",
+						icon: "🚵",
+						description:
+							"Un vrai slalom entre pins et mélèzes depuis le sommet de Réallon, en single track jusqu’au lac de Saint-Apollinaire en passant par la cabane de Joubelle.",
+						hike: {
+							descent: 740,
+							distance: 3.7,
+							duration: "30 min",
+						},
+						parking: {
+							name: "Parking de la station de Réallon",
+							coords: [44.5758029, 6.3618725],
+							tip: "Montée en télésiège de Chabrières jusqu’au départ.",
+						},
+						guide:
+							"https://prod-geotrek-ffc-admin.makina-corpus.net/api/fr/treks/5646/n29-enduro-de-joubelle.pdf",
+					},
+				],
 			},
 		],
 	},
@@ -400,17 +440,19 @@ export const activities: Activity[] = [
 		slug: "escalade",
 		season: "ete",
 		emoji: "🧗",
+		photo: "/activities/escalade.jpg",
 		title: "Escalade",
 		placesTitle: "Nos sites d’escalade préférés",
 		tagline: "Une falaise juste derrière la maison, et d’autres tout autour",
 		intro:
-			"Les grimpeurs seront ravis : le site d'escalade de La Rochette se trouve juste derrière Sunny Lodge, idéal pour une session en fin de journée, à la fraîche. Et plusieurs autres belles falaises sont à quelques minutes de route.",
+			"Site original sur conglomérat qui permet des longueurs d’initiation et quelques longueurs dures de continuité. Le style est plutôt physique. La vue sur le lac est magnifique.",
 		tips: [
 			"Vérifiez l’état du matériel en place, et grimpez toujours avec un casque.",
 		],
 		places: [
 			{
 				name: "La Rochette",
+				photo: "/escalade/la-rochette.jpeg",
 				icon: "🧗",
 				kind: "Savines-le-Lac",
 				distance: "Juste derrière la maison",
@@ -439,11 +481,23 @@ export const activities: Activity[] = [
 			{
 				name: "Roche Rousse",
 				kind: "Châteauroux-les-Alpes",
+				photo: "/escalade/roche-rousse.jpeg",
 				distance: "20 min",
 				icon: "🧗",
 				description:
-					"Niché au pied de la forteresse Vauban de Mont Dauphin, ce spot unique propose plus de 100 voies (du 4c au 8b+) sur un rocher en poudingue, offrant une grimpe physique et originale sur des galets incrustés. ",
+					"Ce site offre une escalade technique et originale liée à la nature du rocher qui est structuré en plats et réglettes souvent obliques. Des bandes schisteuses limitent des strates de calcaire et de silex. ",
 				location: "Site d’escalade, Châteauroux-les-Alpes",
+			},
+			{
+				name: "Via ferrata des Orres",
+				kind: "Via ferrata · Les Orres",
+				distance: "30 min",
+				icon: "🪜",
+				description:
+					"Deux parcours au-dessus des Orres : Marcelinas, plutôt accessible, et La Cascade, longue et difficile (un guide est conseillé pour une première fois). Topo disponible à l’office de tourisme des Orres.",
+				location: "Via ferrata, 05200 Les Orres",
+				guide:
+					"https://geotrek-cd05-aggregator.makina-corpus.net/api/fr/sites/71/via-ferrata-des-orres.pdf",
 			},
 		],
 	},
@@ -451,6 +505,7 @@ export const activities: Activity[] = [
 		slug: "voile-kite-wing",
 		season: "ete",
 		emoji: "🪁",
+		photo: "/activities/wingfoil.jpg",
 		title: "Voile, kitesurf & wingfoil",
 		placesTitle: "Nos spots et écoles préférés",
 		tagline: "Le lac de Serre-Ponçon, un spot de glisse réputé",
@@ -461,6 +516,8 @@ export const activities: Activity[] = [
 			{
 				name: "Les Eaux Douces",
 				kind: "Spot",
+				distance: "8 min",
+				photo: "/bateau/les-eaux-douces.jpeg",
 				icon: "🪁",
 				description:
 					"Notre spot coup de cœur pour la glisse, où se trouvent Le Bus et Altitude Kite.",
@@ -469,6 +526,8 @@ export const activities: Activity[] = [
 			{
 				name: "Chadenas",
 				kind: "Spot",
+				photo: "/bateau/chadenas.jpeg",
+				distance: "20 min",
 				icon: "🪁",
 				description:
 					"Le spot du plan d’eau d’Embrun, plus abrité : parfait pour débuter.",
@@ -477,6 +536,8 @@ export const activities: Activity[] = [
 			{
 				name: "Crots beach",
 				kind: "Spot",
+				photo: "/bateau/crots-beach.jpeg",
+				distance: "15 min",
 				icon: "🪁",
 				description:
 					"La plage de Chanterenne à Crots est le spot le plus venté du lac.",
@@ -485,14 +546,19 @@ export const activities: Activity[] = [
 			{
 				name: "Le Bus",
 				kind: "École de wingfoil · Duotone",
+				photo: "/bateau/le-bus.jpeg",
+				distance: "8 min",
 				icon: "🏄",
-				description: "École 100 % wingfoil aux Eaux Douces.",
+				description:
+					"École de wingfoil aux Eaux Douces, apprenez à voler avec Lucile et Brice !",
 				location: "Les Eaux Douces, Lac de Serre-Ponçon",
 				instagram: "https://www.instagram.com/restaurantlebus_spw/",
 			},
 			{
 				name: "Altitude Kite",
+				photo: "/bateau/altitude-kite.jpeg",
 				kind: "École de kite & wingfoil · F-One",
+				distance: "8 min",
 				icon: "🏄",
 				description: "Ecole de kitesurf et de wingfoil aux Eaux Douces.",
 				location: "Les Eaux Douces, Lac de Serre-Ponçon",
@@ -500,14 +566,18 @@ export const activities: Activity[] = [
 			},
 			{
 				name: "Le Spot",
+				photo: "/bateau/le-spot.jpg",
 				kind: "École de wing & windsurf · AFS",
+				distance: "15 min",
 				icon: "🏄",
-				description: "École de wingfoil et de planche à voile à Crots.",
+				description: "École de wingfoil et de planche à voile à Crots beach.",
 				location: "Le Spot Wingfoil Windsurf School, Crots",
 				instagram: "https://www.instagram.com/le_spot_serreponcon/",
 			},
 			{
 				name: "La boutique du surfer",
+				photo: "/bateau/la-boutique-du-surfer.jpg",
+				distance: "9 min",
 				kind: "Shop",
 				icon: "🏄",
 				description:
@@ -522,6 +592,7 @@ export const activities: Activity[] = [
 		slug: "bateau-wakesurf",
 		season: "ete",
 		emoji: "🚤",
+		photo: "/activities/wakesurf.jpg",
 		title: "Bateau & wakesurf",
 		placesTitle: "Nos adresses préférées",
 		tagline: "Explorer les criques du lac",
@@ -531,9 +602,95 @@ export const activities: Activity[] = [
 		places: [
 			{
 				name: "Sud Escapade",
+				photo: "/bateau/sud-escapade.jpg",
 				kind: "Location & wakesurf",
+				icon: "🏄",
+				distance: "8 min",
 				description: "Location de bateaux et cours de wakesurf.",
+				instagram: "https://www.instagram.com/sudescapades/",
+			},
+			{
+				name: "Aqua Detente Pros",
+				photo: "/bateau/aqua-detente-pros.jpg",
+				distance: "7 min",
+				icon: "🛥️",
+				kind: "Location",
+				description: "Location de bateaux.",
+				instagram: "https://www.instagram.com/aquadetenteprosserreponcon/",
+			},
+			{
+				name: "La BD pirates",
+				icon: "🏴‍☠️",
+				distance: "7 min",
+				kind: "Location & restauration",
+				description: "Location de bateaux.",
+				instagram: "https://www.instagram.com/labdpirates/",
+			},
+		],
+	},
+	{
+		slug: "eaux-vives",
+		season: "ete",
+		emoji: "🌊",
+		photo: "/eau-vive/rafting.jpeg",
+		title: "Sports d'eau vive",
+		placesTitle: "Nos spots préférés",
+		tagline: "Sensations fortes sur la Durance et ses torrents",
+		intro:
+			"La Durance et les torrents qui l’entourent sont un terrain de jeu réputé pour les sports d’eau vive : rafting en famille, hydrospeed pour les plus téméraires et canyoning dans les gorges. Le spot emblématique : la vague du Rabioux, à Châteauroux-les-Alpes.",
+		tips: [
+			"Ces activités se pratiquent avec un moniteur diplômé, qui fournit combinaison, casque et gilet.",
+			"Il faut savoir nager, et un âge minimum est demandé (souvent autour de 10 ans pour l’hydrospeed).",
+		],
+		places: [
+			{
+				name: "Rafting sur la Durance",
+				kind: "Rafting",
+				photo: "/eau-vive/rafting.jpeg",
+				icon: "🛶",
+				description:
+					"Descente en bateau pneumatique accessible en famille : passage du Rabioux puis descente vers Embrun.",
+			},
+			{
+				name: "Randonnée aquatique du Couleau",
+				kind: "Canyoning",
+				icon: "🧗",
+				description:
+					"Rando dans les gorges du torrent avec sauts et toboggants naturels dès 8 ans !",
+			},
+		],
+	},
+	{
+		slug: "sports-aeriens",
+		season: "ete",
+		emoji: "🪂",
+		title: "Parapente & montgolfière",
+		placesTitle: "Nos vols préférés",
+		tagline: "Le lac de Serre-Ponçon vu du ciel",
+		intro:
+			"Pour voir le lac de Serre-Ponçon et les sommets sous un autre angle : un baptême en parapente biplace avec un moniteur, ou un vol en montgolfière au lever du soleil au-dessus du lac.",
+		tips: [
+			"Les vols dépendent de la météo : réservez en début de séjour pour pouvoir décaler si besoin.",
+			"Les vols en montgolfière partent tôt le matin, quand l’air est le plus calme.",
+		],
+		places: [
+			{
+				name: "Baptême de parapente biplace",
+				kind: "Parapente",
+				icon: "🪂",
+				description:
+					"Un vol en tandem avec un moniteur diplômé, sans aucune expérience nécessaire, avec une vue plongeante sur le lac.",
 				draft: true,
+			},
+			{
+				name: "B2O Montgolfières",
+				kind: "Montgolfière · Savines-le-Lac",
+				icon: "🎈",
+				distance: "5 min",
+				description:
+					"Vol au-dessus du lac de Serre-Ponçon au lever du soleil, au départ des rives du lac entre Savines-le-Lac et Chorges. Environ 1 h de vol, à partir de 6 ans.",
+				location: "Gare de Savines-le-Lac, 05160 Savines-le-Lac",
+				website: "https://www.b2o.fr",
 			},
 		],
 	},
@@ -541,6 +698,7 @@ export const activities: Activity[] = [
 		slug: "plages",
 		season: "ete",
 		emoji: "🏖️",
+		photo: "/bateau/crots-beach.jpeg",
 		title: "Plages",
 		placesTitle: "Nos plages préférées",
 		tagline: "Baignade dans une eau turquoise",
@@ -566,9 +724,8 @@ export const activities: Activity[] = [
 				description:
 					"Grande pelouse ombragée, galets et accès goudronné à l’eau. Ponton loisirs avec toboggan et plongeoir.",
 				features: [
-					"Snack-bar à proximité",
-					"Skate-park",
-					"Jeux pour enfants",
+					"Snack-bar",
+					"Trampoline parc",
 					"Toboggan & plongeoir",
 					"Sanitaires",
 				],
@@ -626,6 +783,7 @@ export const restaurantCategories: RestaurantCategory[] = [
 			},
 			{
 				name: "Le Duo Tapas",
+				photo: "/restaurants/le-duo-tapas.jpeg",
 				kind: "Plage de Savines",
 				description:
 					"Tapas et smoothies sur la plage de Savines-le-Lac, idéal pour les couchers de soleil.",
@@ -692,4 +850,5 @@ export const restaurantCategories: RestaurantCategory[] = [
 	},
 ];
 
-export const getActivity = (slug: string | undefined): Activity | undefined => activities.find((a) => a.slug === slug);
+export const getActivity = (slug: string | undefined): Activity | undefined =>
+	activities.find((a) => a.slug === slug);

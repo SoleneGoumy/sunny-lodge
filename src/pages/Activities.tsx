@@ -4,11 +4,20 @@ import type { Activity, SeasonId } from '../types'
 
 export function ActivityCard({ activity }: { activity: Activity }) {
   return (
-    <Link to={`/activites/${activity.slug}`} className={`activity-card activity-card--${activity.season}`}>
-      <span className="activity-card__emoji" aria-hidden="true">{activity.emoji}</span>
-      <h3>{activity.title}</h3>
-      <p>{activity.tagline}</p>
-      <span className="activity-card__more">Nos bonnes adresses →</span>
+    <Link to={`/activites/${activity.slug}`} className="activity-card">
+      <div className="activity-card__media">
+        {activity.photo ? (
+          <img className="activity-card__photo" src={activity.photo} alt="" loading="lazy" />
+        ) : (
+          <div className="activity-card__photo activity-card__photo--empty" aria-hidden="true">
+            {activity.emoji}
+          </div>
+        )}
+      </div>
+      <div className="activity-card__body">
+        <h3>{activity.title}</h3>
+        <span className="activity-card__more">Nos bonnes adresses →</span>
+      </div>
     </Link>
   )
 }
@@ -16,7 +25,7 @@ export function ActivityCard({ activity }: { activity: Activity }) {
 export default function Activities() {
   return (
     <>
-      <section className="page-hero page-hero--mixed">
+      <section className="page-hero page-hero--seasons">
         <div className="container">
           <p className="eyebrow">Que faire autour de Sunny Lodge ?</p>
           <h1>Activités été comme hiver</h1>

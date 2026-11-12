@@ -1,0 +1,23 @@
+# Configuration Netlify (production : sunny-lodge.fr)
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# Redirige www vers le domaine principal
+[[redirects]]
+  from = "https://www.sunny-lodge.fr/*"
+  to = "https://sunny-lodge.fr/:splat"
+  status = 301
+  force = true
+
+# Application React : toutes les adresses renvoient vers index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Les disponibilités doivent toujours être relues
+[[headers]]
+  for = "/availability.json"
+  [headers.values]
+    Cache-Control = "no-cache"
