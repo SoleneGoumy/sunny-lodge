@@ -35,9 +35,12 @@ function Mark({ source }: { source: ReviewSource }) {
 
 export default function ReviewBadge({ source }: { source: ReviewSource }) {
   return (
-    <span className={`review-badge review-badge--${source}`}>
+    <span
+      className={`review-badge review-badge--${source}`}
+      title={`Avis ${reviewSources[source].label}`}
+    >
       <Mark source={source} />
-      {reviewSources[source].label}
+      <span className="review-badge__label">{reviewSources[source].label}</span>
     </span>
   )
 }

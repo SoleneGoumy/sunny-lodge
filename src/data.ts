@@ -8,11 +8,14 @@ import type {
 	Highlight,
 	NearbyItem,
 	Photo,
+	Bathroom,
+	Hosts,
 	Rating,
 	Review,
 	ReviewSource,
 	ReviewSourceInfo,
 } from "./types";
+import type { PhotoPath } from "./photos.generated";
 
 export const AIRBNB_URL = "https://www.airbnb.fr/rooms/1592175823173427125";
 
@@ -29,29 +32,55 @@ export const BOOKING: BookingSettings = {
 }
 
 
-const base = "https://a0.muscache.com/im/pictures/hosting";
-const img = (path: string): string => `${base}/${path}?im_w=1440`;
+// Photos de la maison (dans public/maison/, originaux dans photos-originales/maison/).
+// Chaque liste forme une section de photos sur l'accueil.
 
-// Photos de l'annonce Airbnb. Pour plus de fiabilité, vous pouvez les copier dans /public/photos
-// et remplacer les URL par '/photos/nom.jpg'.
-export const photos: Photo[] = [
-	"Hosting-1592175823173427125/original/aff61be9-44fe-42bc-b406-c77c22b9bda2.jpeg",
-	"Hosting-1592175823173427125/original/498fbe69-9dd4-4c42-8081-8f03d2bf3aa0.jpeg",
-	"Hosting-1592175823173427125/original/2c09fb31-3c8f-4679-986c-f832020ea6aa.jpeg",
-	"Hosting-1592175823173427125/original/471c2912-7e9a-42c8-b79f-ba0e4a062b1e.jpeg",
-	"Hosting-1592175823173427125/original/53463db0-6fe8-4a26-8867-7793d157a1cd.jpeg",
-	"Hosting-1551264521786378661/original/068b070b-d0cd-4449-a058-622bbf5bbcd5.jpeg",
-	"Hosting-1592175823173427125/original/d0e9c01d-8701-45b6-a071-b48fe4ba046f.jpeg",
-	"Hosting-1592175823173427125/original/b398be9c-8bde-4827-8f51-876db8a90623.jpeg",
-	"Hosting-1592175823173427125/original/1cbde414-7e74-4643-a62b-0954f590d292.jpeg",
-	"Hosting-1592175823173427125/original/86d7c2a1-9129-4763-ac57-7b63976514d2.jpeg",
-	"Hosting-1592175823173427125/original/a2b397e5-c36e-40a9-97bf-54b541b58612.jpeg",
-	"Hosting-1592175823173427125/original/1bcdd603-ca6e-4343-8bb0-15cba9fa6556.jpeg",
-	"Hosting-1592175823173427125/original/d36a57fe-7e3c-4e1e-8578-0256e38c9c27.jpeg",
-	"Hosting-1592175823173427125/original/589a743c-8886-405e-9674-8eb1e3580fc4.jpeg",
-	"Hosting-1592175823173427125/original/4288d30e-16c0-461c-88af-f73956e2f4b0.jpeg",
-	"Hosting-1592175823173427125/original/c3489f96-1927-423b-a90a-f815e58b5c08.jpeg",
-].map((p, i) => ({ src: img(p), alt: `Sunny Lodge – photo ${i + 1}` }));
+/** Texte sous le titre « Espace de vie ». */
+export const livingIntro =
+	"La maison s’articule autour d’une grande pièce de vie de 37 m² avec un coin salon, une grande table à manger et une cuisine ouverte tout équipée. À l’étage, un second petit salon sur la mezzanine offre une vue encore plus spectaculaire sur les montagnes et le lac. Une entrée spacieuse dessert aussi une buanderie avec de l’espace de rangement.";
+
+/** Section « Espace de vie ». */
+export const livingPhotos: Photo[] = [
+	{ src: "/maison/salon.jpg", alt: "Le salon" },
+	{ src: "/maison/salle-a-manger.jpg", alt: "La salle à manger" },
+	{ src: "/maison/cuisine.jpg", alt: "La cuisine" },
+	{ src: "/maison/entree.jpg", alt: "L’entrée" },
+	{ src: "/maison/mezzanine.jpg", alt: "La mezzanine" },
+];
+
+/** Texte sous le titre « Extérieur ». */
+export const outdoorIntro =
+	"Une grande terrasse de 30 m² plein sud avec un petit coin salon, une grande table pour déjeuner dehors et un barbecue à gaz. Le jardin offre un grand espace vert au calme, et un grand parking peut accueillir vos véhicules.";
+
+/** Section « Extérieur ». */
+export const outdoorPhotos: Photo[] = [
+	{ src: "/maison/maison-ete.jpg", alt: "La maison et son jardin en été" },
+	{ src: "/maison/terrasse.jpg", alt: "La terrasse" },
+	{ src: "/maison/terrasse-bbq.jpg", alt: "La terrasse et le barbecue" },
+	{ src: "/maison/maison-hiver.jpg", alt: "La maison en hiver" },
+	{ src: "/maison/parking.jpg", alt: "Le parking" },
+	{ src: "/maison/parking-2.jpg", alt: "Le parking" },
+];
+
+/** Photo de fond de l'accueil. */
+export const heroPhoto: PhotoPath = "/maison/maison-ete.jpg";
+
+/** Les 3 photos à côté de la présentation « La maison ». */
+export const aboutPhotos: Photo[] = [
+	{ src: "/maison/salon.jpg", alt: "Le salon" },
+	{ src: "/maison/salle-a-manger.jpg", alt: "La salle à manger" },
+	{ src: "/maison/terrasse.jpg", alt: "La terrasse" },
+];
+
+/** Section « Vos hôtes » (ajoutez `photo: "/maison/hotes.jpg"` quand la photo est dans public/). */
+export const hosts: Hosts = {
+	names: "Solène & Sylvain",
+	initials: "S & S",
+	text: [
+		"Nous habitons juste à côté de Sunny Lodge et nous sommes passionnés par notre région, entre lac et montagnes.",
+		"Nous serons ravis de vous accueillir et de vous donner nos meilleurs conseils d’activités, de visites et de bonnes adresses pour profiter pleinement de votre séjour, été comme hiver.",
+	],
+};
 
 export const highlights: Highlight[] = [
 	{ value: "10", label: "voyageurs" },
@@ -65,33 +94,39 @@ export const bedrooms: Bedroom[] = [
 		name: "Chambre 1",
 		floor: "Rez-de-chaussée",
 		beds: "1 lit double (160 × 200)",
-		photo: img(
-			"Hosting-1551264521786378661/original/d93aadfc-52d0-4f8b-9590-f50c8a5f2d87.jpeg",
-		),
+		photos: ["/maison/chambre-rdc.jpg"],
 	},
 	{
 		name: "Chambre 2",
 		floor: "Étage",
 		beds: "1 lit double (160 × 200)",
-		photo: img(
-			"Hosting-1592175823173427125/original/d5e10ddf-6e57-4f5e-97c3-3f2f2b6ecf1d.jpeg",
-		),
+		photos: ["/maison/chambre-nature.jpg", "/maison/chambre-nature-2.jpg"],
 	},
 	{
 		name: "Chambre 3",
 		floor: "Étage",
 		beds: "2 lits superposés (90 × 190)",
-		photo: img(
-			"Hosting-1592175823173427125/original/2dd65a6e-7c42-4c69-9f6d-57865d169f00.jpeg",
-		),
+		photos: ["/maison/chambre-montagne.jpg", "/maison/chambre-montagne-2.jpg"],
 	},
 	{
 		name: "Chambre 4",
 		floor: "Étage",
 		beds: "1 lit double (160 × 200)",
-		photo: img(
-			"Hosting-1592175823173427125/original/cd113d5d-2238-4e63-9e0c-b6c3ab3be4cf.jpeg",
-		),
+		photos: ["/maison/chambre-soleil.jpg", "/maison/chambre-soleil-2.jpg"],
+	},
+];
+
+/** Salles de bain, affichées sous les chambres. */
+export const bathrooms: Bathroom[] = [
+	{
+		name: "Salle de bain",
+		floor: "Rez-de-chaussée",
+		photos: ["/maison/salle-de-bain-rdc.jpg"],
+	},
+	{
+		name: "Salle de bain",
+		floor: "Étage",
+		photos: ["/maison/salle-de-bain-etage.jpg"],
 	},
 ];
 

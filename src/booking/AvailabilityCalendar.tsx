@@ -151,7 +151,10 @@ export default function AvailabilityCalendar({ blocked, minNights, value, onChan
           </button>
         )}
       </div>
-      {minNights > 1 && <p className="cal__note">Séjour de {minNights} nuits minimum. Départ possible le jour d’une arrivée.</p>}
+      <p className="cal__note">
+        {minNights > 1 && <>Séjour de {minNights} nuits minimum. </>}
+        Arrivée à partir de 16h00, départ avant 11h00.
+      </p>
     </div>
   )
 }

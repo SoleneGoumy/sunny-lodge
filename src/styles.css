@@ -315,6 +315,9 @@ a {
 }
 
 /* Bedrooms */
+.cards-title {
+	margin: 36px 0 2px;
+}
 .cards {
 	display: grid;
 	grid-template-columns: repeat(4, 1fr);
@@ -331,6 +334,77 @@ a {
 	width: 100%;
 	aspect-ratio: 4 / 3;
 	object-fit: cover;
+}
+.room-carousel {
+	position: relative;
+}
+.room-carousel__track {
+	display: flex;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+}
+.room-carousel__track::-webkit-scrollbar {
+	display: none;
+}
+.room-carousel__track img {
+	flex: 0 0 100%;
+	scroll-snap-align: start;
+}
+.room-carousel__arrow {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 32px;
+	height: 32px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.85);
+	color: var(--ink);
+	font-size: 1.4rem;
+	line-height: 1;
+	padding-bottom: 3px;
+	cursor: pointer;
+	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+	opacity: 0;
+	transition: opacity 0.2s;
+}
+.room-carousel__arrow--prev {
+	left: 10px;
+}
+.room-carousel__arrow--next {
+	right: 10px;
+}
+.room-carousel:hover .room-carousel__arrow:not(:disabled),
+.room-carousel__arrow:focus-visible {
+	opacity: 1;
+}
+.room-carousel__dots {
+	position: absolute;
+	bottom: 10px;
+	left: 0;
+	right: 0;
+	display: flex;
+	justify-content: center;
+	gap: 6px;
+}
+.room-carousel__dots button {
+	width: 8px;
+	height: 8px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.55);
+	box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+	cursor: pointer;
+}
+.room-carousel__dots button.is-active {
+	background: var(--white);
+}
+@media (hover: none) {
+	.room-carousel__arrow {
+		display: none;
+	}
 }
 .card__body {
 	padding: 18px 20px 20px;
@@ -358,6 +432,16 @@ a {
 }
 
 /* Gallery */
+.section-intro {
+	margin: -4px 0 24px;
+	color: var(--muted);
+}
+/* Deux sections de photos à la suite : moins d'espace entre elles. */
+.section--photos + .section--photos {
+	padding-top: 0;
+	/* Avec l'ancre (#exterieur), garder le même espace sous le menu que les autres sections. */
+	scroll-margin-top: clamp(64px, 9vw, 110px);
+}
 .gallery {
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
@@ -478,36 +562,75 @@ a {
 .star {
 	color: var(--sun);
 }
-.ratings {
-	list-style: none;
-	padding: 0;
-	margin: 0 0 40px;
+/* Vos hôtes : photo ronde à gauche, texte à droite */
+.hosts {
 	display: grid;
-	grid-template-columns: repeat(6, 1fr);
-	gap: 12px;
+	grid-template-columns: 220px 1fr;
+	gap: 48px;
+	align-items: center;
 }
-.ratings li {
-	background: var(--white);
-	border-radius: var(--radius);
-	padding: 14px;
-	text-align: center;
-	display: flex;
-	flex-direction: column;
+.hosts__photo {
+	width: 220px;
+	aspect-ratio: 1;
+	border-radius: 50%;
+	overflow: hidden;
 	box-shadow: var(--shadow);
-}
-.ratings span {
-	font-size: 0.85rem;
-	color: var(--muted);
-}
-.ratings strong {
+	background: linear-gradient(135deg, var(--lake), var(--sun));
+	display: grid;
+	place-items: center;
+	color: var(--white);
 	font-family: var(--serif);
-	font-size: 1.5rem;
-	color: var(--lake);
+	font-size: 2.6rem;
+}
+.hosts__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.hosts p:last-child {
+	margin-bottom: 0;
+}
+@media (max-width: 640px) {
+	.hosts {
+		grid-template-columns: 1fr;
+		justify-items: center;
+		text-align: center;
+		gap: 24px;
+	}
+	.hosts__photo {
+		width: 160px;
+	}
+}
+
+/* Avis : photo de la terrasse en fond, sans voile ; une ombre garde les textes lisibles. */
+.section--reviews {
+	background: url("/maison/terrasse.jpg") center / cover;
+	color: var(--white);
+}
+/* Le haut de la photo est un ciel clair : titre foncé avec un halo blanc. */
+.section--reviews h2,
+.section--reviews .eyebrow {
+	color: var(--lake-dark);
+	text-shadow: 0 0 12px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.9);
+}
+/* Le bas de la photo est sombre (terrasse) : lien clair avec une ombre. */
+.section--reviews .review-links {
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+}
+.section--reviews .link {
+	color: var(--sun);
+}
+.section--reviews .review {
+	padding: 18px 20px;
+	color: var(--ink);
+	background: rgba(255, 255, 255, 0.82);
+	backdrop-filter: blur(6px);
+	-webkit-backdrop-filter: blur(6px);
 }
 .reviews {
 	display: grid;
 	grid-template-columns: repeat(2, 1fr);
-	gap: 22px;
+	gap: 32px;
 }
 .review {
 	margin: 0;
@@ -574,30 +697,21 @@ a {
 }
 
 /* Booking */
+/* Réservation : panorama de la baie de Chanteloube en fond, sans voile ;
+   une ombre garde les textes blancs lisibles. */
 .booking {
-	background: var(--lake-dark);
+	background: var(--lake-dark) url("/region/chanteloube.jpg") center / cover;
+	color: var(--white);
+}
+.booking__head,
+.booking__alt {
+	text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75), 0 0 16px rgba(0, 0, 0, 0.5);
+}
+.booking .eyebrow {
 	color: var(--white);
 }
 .booking h2 {
 	color: var(--white);
-}
-.practical {
-	list-style: none;
-	padding: 0;
-	margin: 0 0 32px;
-	display: grid;
-	gap: 10px;
-}
-.practical li {
-	padding: 12px 0;
-	border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-	display: flex;
-	justify-content: space-between;
-	gap: 16px;
-}
-.practical strong {
-	color: var(--sun);
-	font-weight: 600;
 }
 .booking__photo {
 	border-radius: var(--radius);
@@ -665,14 +779,9 @@ a {
 	.amenities {
 		grid-template-columns: repeat(2, 1fr);
 	}
-	.ratings {
-		grid-template-columns: repeat(3, 1fr);
-	}
 }
-@media (max-width: 820px) {
-	.split {
-		grid-template-columns: 1fr;
-	}
+/* Menu burger : en dessous de 1040 px, les 8 liens ne tiennent plus sur une ligne. */
+@media (max-width: 1040px) {
 	.burger {
 		display: block;
 	}
@@ -700,6 +809,11 @@ a {
 	.nav .btn {
 		margin-top: 8px;
 	}
+}
+@media (max-width: 820px) {
+	.split {
+		grid-template-columns: 1fr;
+	}
 	.gallery {
 		grid-template-columns: repeat(2, 1fr);
 	}
@@ -725,9 +839,6 @@ a {
 	.cards,
 	.amenities {
 		grid-template-columns: 1fr;
-	}
-	.ratings {
-		grid-template-columns: repeat(2, 1fr);
 	}
 	.form__row {
 		grid-template-columns: 1fr;
@@ -998,24 +1109,33 @@ a {
 	padding: 30px;
 	display: flex;
 	flex-direction: column;
-	min-height: 240px;
+	min-height: 310px;
 	transition: transform 0.2s;
 }
 .teaser__card:hover {
 	transform: translateY(-3px);
 }
+/* Cartes été / hiver : photo de saison en fond, avec un dégradé aux couleurs de la saison
+   (dense derrière le texte en haut, transparent en bas pour laisser voir la photo). */
 .teaser__card--hiver {
-	background: linear-gradient(135deg, #1d3557, #457b9d);
+	background:
+		linear-gradient(170deg, rgba(29, 53, 87, 0.92) 0%, rgba(29, 53, 87, 0.7) 50%, rgba(29, 53, 87, 0.1) 100%),
+		#1d3557 url("/activities/en-hiver.jpg") center / cover;
 }
 .teaser__card--ete {
-	background: linear-gradient(135deg, #1f5f66, #2f8f8a);
+	background:
+		linear-gradient(170deg, rgba(31, 95, 102, 0.9) 0%, rgba(31, 95, 102, 0.65) 50%, rgba(31, 95, 102, 0.1) 100%),
+		#1f5f66 url("/activities/en-ete.jpg") center / cover;
+}
+.teaser__card--hiver,
+.teaser__card--ete {
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .teaser__card--food {
-	background: linear-gradient(135deg, #7a3a20, #c0662f);
-}
-.teaser__emoji {
-	font-size: 2.4rem;
-	margin-bottom: 14px;
+	background:
+		linear-gradient(170deg, rgba(122, 58, 32, 0.92) 0%, rgba(122, 58, 32, 0.65) 50%, rgba(122, 58, 32, 0.1) 100%),
+		#7a3a20 url("/restaurants/le-duo-tapas.jpeg") center / cover;
+	text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 .teaser__card p {
 	opacity: 0.9;
@@ -1025,8 +1145,27 @@ a {
 .teaser__card .activity-card__more {
 	color: var(--sun);
 }
+/* Sur les photos (été / hiver), le lien est posé sur une pastille pour rester lisible. */
+.teaser__card--hiver .activity-card__more,
+.teaser__card--ete .activity-card__more {
+	align-self: flex-start;
+	padding: 5px 14px;
+	border-radius: 999px;
+	text-shadow: none;
+}
+.teaser__card--hiver .activity-card__more {
+	background: rgba(29, 53, 87, 0.88);
+}
+.teaser__card--ete .activity-card__more {
+	background: rgba(31, 95, 102, 0.88);
+}
 .teaser__card--food .activity-card__more {
 	color: #ffe0a8;
+	align-self: flex-start;
+	padding: 5px 14px;
+	border-radius: 999px;
+	text-shadow: none;
+	background: rgba(122, 58, 32, 0.88);
 }
 
 .nav a.active {
@@ -1050,15 +1189,19 @@ a {
 		grid-template-columns: 1fr;
 	}
 	.teaser__card {
-		min-height: 0;
+		min-height: 220px;
 	}
 }
-@media (max-width: 1100px) and (min-width: 821px) {
+.nav a,
+.logo {
+	white-space: nowrap;
+}
+@media (max-width: 1100px) and (min-width: 1041px) {
 	.nav {
-		gap: 16px;
+		gap: 14px;
 	}
 	.nav a:not(.btn) {
-		font-size: 0.88rem;
+		font-size: 0.85rem;
 	}
 }
 .category-note {
@@ -1243,6 +1386,33 @@ h2 > span[aria-hidden] {
 	border-radius: 999px;
 	margin-bottom: 14px;
 }
+/* Sur les cartes d'avis : juste le logo, discret, en bas à droite. */
+.review .review-badge {
+	position: absolute;
+	right: 14px;
+	bottom: 14px;
+	margin: 0;
+	padding: 0;
+	background: none;
+}
+.review .review-badge svg {
+	width: 18px;
+	height: 18px;
+}
+.review .review-badge__label {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	white-space: nowrap;
+}
+.review figcaption {
+	padding-right: 28px;
+}
+.review blockquote {
+	margin-bottom: 10px;
+}
 .review-badge svg {
 	width: 22px;
 	height: 22px;
@@ -1266,14 +1436,7 @@ h2 > span[aria-hidden] {
 
 /* ───────── Réservation directe ───────── */
 .booking__head {
-	display: grid;
-	grid-template-columns: 1.3fr 1fr;
-	gap: 48px;
-	align-items: end;
-	margin-bottom: 32px;
-}
-.booking__head .practical {
-	margin: 0;
+	margin-bottom: 24px;
 }
 .booking__intro {
 	opacity: 0.9;
@@ -1538,12 +1701,11 @@ h2 > span[aria-hidden] {
 }
 
 @media (max-width: 960px) {
-	.booking__head {
-		grid-template-columns: 1fr;
-		gap: 24px;
-	}
+	/* Widget plus étroit et centré : cases moins grandes, la photo de fond reste visible autour. */
 	.booking-widget {
 		grid-template-columns: 1fr;
+		max-width: 620px;
+		margin-inline: auto;
 	}
 	.booking-form {
 		border-left: 0;
@@ -1554,7 +1716,13 @@ h2 > span[aria-hidden] {
 }
 @media (max-width: 640px) {
 	.booking-widget {
-		padding: 18px;
+		width: calc(100% - 32px);
+		max-width: 360px;
+		margin-inline: auto;
+		padding: 16px;
+	}
+	.cal__day {
+		font-size: 0.82rem;
 	}
 	.cal__months {
 		grid-template-columns: 1fr;

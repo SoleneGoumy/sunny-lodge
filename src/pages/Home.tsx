@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import type { Photo } from "../types";
 import {
 	AIRBNB_URL,
-	photos,
+	livingPhotos,
+	outdoorPhotos,
+	livingIntro,
+	outdoorIntro,
+	bathrooms,
+	hosts,
+	heroPhoto,
+	aboutPhotos,
 	highlights,
 	bedrooms,
 	amenities,
 	reviews,
-	ratings,
 	nearby,
 	reviewSources,
 } from "../data";
@@ -21,21 +28,21 @@ function Hero() {
 		<section
 			id="top"
 			className="hero"
-			style={{ backgroundImage: `url(${photos[0].src})` }}
+			style={{ backgroundImage: `url(${heroPhoto})` }}
 		>
 			<div className="hero__overlay" />
 			<div className="hero__content">
-				<p className="eyebrow">Savines-le-Lac · Hautes-Alpes</p>
+				<p className="eyebrow">Location à Savines-le-Lac · Hautes-Alpes</p>
 				<h1>Sunny Lodge</h1>
 				<p className="hero__lead">
-					Une maison baignée de soleil, entre le lac de Serre-Ponçon et les
-					montagnes, pour se retrouver en famille ou entre amis.
+					Maison de vacances baignée de soleil, entre le lac de Serre-Ponçon et
+					les montagnes, pour se retrouver en famille ou entre amis.
 				</p>
 				<div className="hero__actions">
 					<a href="#reserver" className="btn">
 						Vérifier les disponibilités
 					</a>
-					<a href="#galerie" className="btn btn--ghost">
+					<a href="#espace-de-vie" className="btn btn--ghost">
 						Voir les photos
 					</a>
 				</div>
@@ -91,12 +98,75 @@ function About() {
 					</div>
 				</div>
 				<div className="mosaic">
-					<img src={photos[1].src} alt={photos[1].alt} loading="lazy" />
-					<img src={photos[2].src} alt={photos[2].alt} loading="lazy" />
-					<img src={photos[3].src} alt={photos[3].alt} loading="lazy" />
+					{aboutPhotos.map((p) => (
+						<img key={p.src} src={p.src} alt={p.alt} loading="lazy" />
+					))}
 				</div>
 			</div>
 		</section>
+	);
+}
+
+/** Petit carrousel de photos d'une chambre (glisser au doigt, flèches ou points). */
+function RoomCarousel({ photos, name }: { photos: string[]; name: string }) {
+	const [index, setIndex] = useState(0);
+	const track = useRef<HTMLDivElement>(null);
+
+	const goTo = (i: number) => {
+		const el = track.current;
+		if (el) el.scrollTo({ left: i * el.clientWidth, behavior: "smooth" });
+	};
+	const onScroll = () => {
+		const el = track.current;
+		if (el) setIndex(Math.round(el.scrollLeft / el.clientWidth));
+	};
+
+	return (
+		<div className="room-carousel">
+			<div className="room-carousel__track" ref={track} onScroll={onScroll}>
+				{photos.map((src, i) => (
+					<img
+						key={src}
+						src={src}
+						alt={photos.length > 1 ? `${name} – photo ${i + 1}` : name}
+						loading="lazy"
+					/>
+				))}
+			</div>
+			{photos.length > 1 && (
+				<>
+					<button
+						type="button"
+						className="room-carousel__arrow room-carousel__arrow--prev"
+						onClick={() => goTo(index - 1)}
+						disabled={index === 0}
+						aria-label="Photo précédente"
+					>
+						‹
+					</button>
+					<button
+						type="button"
+						className="room-carousel__arrow room-carousel__arrow--next"
+						onClick={() => goTo(index + 1)}
+						disabled={index === photos.length - 1}
+						aria-label="Photo suivante"
+					>
+						›
+					</button>
+					<div className="room-carousel__dots">
+						{photos.map((src, i) => (
+							<button
+								key={src}
+								type="button"
+								className={i === index ? "is-active" : undefined}
+								onClick={() => goTo(i)}
+								aria-label={`Photo ${i + 1}`}
+							/>
+						))}
+					</div>
+				</>
+			)}
+		</div>
 	);
 }
 
@@ -109,11 +179,24 @@ function Bedrooms() {
 				<div className="cards">
 					{bedrooms.map((b) => (
 						<article key={b.name} className="card">
-							<img src={b.photo} alt={b.name} loading="lazy" />
+							<RoomCarousel photos={b.photos} name={b.name} />
 							<div className="card__body">
 								<h3>{b.name}</h3>
 								<p className="muted">{b.floor}</p>
 								<p>{b.beds}</p>
+							</div>
+						</article>
+					))}
+				</div>
+				<h3 className="cards-title">Salles de bain</h3>
+				<div className="cards">
+					{bathrooms.map((b) => (
+						<article key={b.floor} className="card">
+							<RoomCarousel photos={b.photos} name={`${b.name} – ${b.floor}`} />
+							<div className="card__body">
+								<h3>{b.name}</h3>
+								<p className="muted">{b.floor}</p>
+								{b.details && <p>{b.details}</p>}
 							</div>
 						</article>
 					))}
@@ -129,10 +212,21 @@ function Bedrooms() {
 	);
 }
 
-function Gallery() {
+/** Section de photos (grille + diaporama plein écran au clic). */
+function PhotoSection({
+	id,
+	eyebrow,
+	title,
+	intro,
+	photos,
+}: {
+	id: string;
+	eyebrow: string;
+	title: string;
+	intro?: string;
+	photos: Photo[];
+}) {
 	const [index, setIndex] = useState<number | null>(null);
-	const [showAll, setShowAll] = useState(false);
-	const visible = showAll ? photos : photos.slice(0, 9);
 
 	useEffect(() => {
 		if (index === null) return;
@@ -152,31 +246,23 @@ function Gallery() {
 	}, [index]);
 
 	return (
-		<section id="galerie" className="section">
+		<section id={id} className="section section--photos">
 			<div className="container">
-				<p className="eyebrow">Photos</p>
-				<h2>Visitez Sunny Lodge</h2>
+				<p className="eyebrow">{eyebrow}</p>
+				<h2>{title}</h2>
+				{intro && <p className="section-intro">{intro}</p>}
 				<div className="gallery">
-					{visible.map((p, i) => (
+					{photos.map((p, i) => (
 						<button
 							key={p.src}
 							className="gallery__item"
 							onClick={() => setIndex(i)}
+							aria-label={`Agrandir : ${p.alt}`}
 						>
 							<img src={p.src} alt={p.alt} loading="lazy" />
 						</button>
 					))}
 				</div>
-				{!showAll && (
-					<div className="center">
-						<button
-							className="btn btn--outline"
-							onClick={() => setShowAll(true)}
-						>
-							Afficher les {photos.length} photos
-						</button>
-					</div>
-				)}
 			</div>
 
 			{index !== null && (
@@ -232,9 +318,7 @@ function Amenities() {
 				<div className="amenities">
 					{amenities.map((group) => (
 						<div key={group.title} className="amenity">
-							<h3>
-								<span aria-hidden="true">{group.icon}</span> {group.title}
-							</h3>
+							<h3>{group.title}</h3>
 							<ul>
 								{group.items.map((item) => (
 									<li key={item}>{item}</li>
@@ -250,20 +334,12 @@ function Amenities() {
 
 function Reviews() {
 	return (
-		<section id="avis" className="section">
+		<section id="avis" className="section section--reviews">
 			<div className="container">
 				<p className="eyebrow">Avis voyageurs</p>
 				<h2>
 					<span className="star">★</span> 4,93 · 14 commentaires sur Airbnb
 				</h2>
-				<ul className="ratings">
-					{ratings.map(([label, value]) => (
-						<li key={label}>
-							<span>{label}</span>
-							<strong>{value}</strong>
-						</li>
-					))}
-				</ul>
 				<div className="reviews">
 					{reviews.map((r) => (
 						<figure key={`${r.source}-${r.name}-${r.date}`} className="review">
@@ -298,17 +374,41 @@ function Reviews() {
 	);
 }
 
+function Hosts() {
+	return (
+		<section id="hotes" className="section">
+			<div className="container hosts">
+				<div className="hosts__photo">
+					{hosts.photo ? (
+						<img src={hosts.photo} alt={hosts.names} loading="lazy" />
+					) : (
+						<span aria-hidden="true">{hosts.initials}</span>
+					)}
+				</div>
+				<div>
+					<p className="eyebrow">Vos hôtes</p>
+					<h2>{hosts.names}</h2>
+					{hosts.text.map((t) => (
+						<p key={t}>{t}</p>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+}
+
 function Location() {
 	return (
 		<section id="acces" className="section section--tinted">
 			<div className="container split">
 				<div>
 					<p className="eyebrow">Accès & alentours</p>
-					<h2>Entre lac et montagne</h2>
+					<h2>Savines-le-Lac, entre lac et montagnes</h2>
 					<p>
-						Savines-le-Lac est un village des Hautes-Alpes posé sur les rives du
-						lac de Serre-Ponçon, entre Gap et Embrun. Un spot idéal, été comme
-						hiver.
+						Savines-le-Lac est un village des Hautes-Alpes sur les rives du lac
+						de Serre-Ponçon, entre Gap et Embrun. Un cadre idéal, été comme
+						hiver, pour les amoureux de nature, de montagne et d’activités en
+						plein air.
 					</p>
 					<div className="nearby">
 						{nearby.map((n) => (
@@ -346,29 +446,13 @@ function Booking() {
 		<section id="reserver" className="section booking">
 			<div className="container">
 				<div className="booking__head">
-					<div>
-						<p className="eyebrow">Réserver en direct</p>
-						<h2>Votre séjour à Sunny Lodge</h2>
-						<p className="booking__intro">
-							Choisissez vos dates parmi nos disponibilités et envoyez-nous votre
-							demande : nous la validons avec vous directement, sans passer par
-							une plateforme.
-						</p>
-					</div>
-					<ul className="practical">
-						<li>
-							<strong>Arrivée</strong> à partir de 16h00
-						</li>
-						<li>
-							<strong>Départ</strong> avant 11h00
-						</li>
-						<li>
-							<strong>Capacité</strong> 10 voyageurs
-						</li>
-						<li>
-							<strong>Hôtes</strong> Solène & Sylvain, Superhôtes
-						</li>
-					</ul>
+					<p className="eyebrow">Réserver en direct</p>
+					<h2>Votre séjour à Sunny Lodge</h2>
+					<p className="booking__intro">
+						Choisissez vos dates parmi nos disponibilités et envoyez-nous votre
+						demande : nous la validons avec vous directement, sans passer par
+						une plateforme.
+					</p>
 				</div>
 				<BookingWidget />
 				<p className="booking__alt">
@@ -400,9 +484,6 @@ function ActivitiesTeaser() {
 							to={`/activites#${key}`}
 							className={`teaser__card teaser__card--${key}`}
 						>
-							<span className="teaser__emoji" aria-hidden="true">
-								{s.emoji}
-							</span>
 							<h3>En {s.label.toLowerCase()}</h3>
 							<p>
 								{activities
@@ -414,9 +495,6 @@ function ActivitiesTeaser() {
 						</Link>
 					))}
 					<Link to="/restaurants" className="teaser__card teaser__card--food">
-						<span className="teaser__emoji" aria-hidden="true">
-							🍽️
-						</span>
 						<h3>Bars & restaurants</h3>
 						<p>Nos tables et terrasses préférées autour du lac.</p>
 						<span className="activity-card__more">Découvrir →</span>
@@ -433,10 +511,24 @@ export default function Home() {
 			<Hero />
 			<About />
 			<Bedrooms />
-			<Gallery />
+			<PhotoSection
+				id="espace-de-vie"
+				eyebrow="Salon · Salle à manger · Cuisine"
+				title="Espace de vie"
+				intro={livingIntro}
+				photos={livingPhotos}
+			/>
+			<PhotoSection
+				id="exterieur"
+				eyebrow="Terrasse · Jardin · Parking"
+				title="Extérieur"
+				intro={outdoorIntro}
+				photos={outdoorPhotos}
+			/>
 			<Amenities />
 			<ActivitiesTeaser />
 			<Reviews />
+			<Hosts />
 			<Location />
 			<Booking />
 		</>

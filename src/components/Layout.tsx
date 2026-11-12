@@ -4,7 +4,8 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 const NAV = [
   ['/#maison', 'La maison'],
   ['/#chambres', 'Chambres'],
-  ['/#galerie', 'Photos'],
+  ['/#espace-de-vie', 'Espace de vie'],
+  ['/#exterieur', 'Extérieur'],
   ['/activites', 'Activités'],
   ['/visites', 'Visites'],
   ['/restaurants', 'Restaurants'],

@@ -116,8 +116,35 @@ export interface RestaurantCategory {
 // ───────── Données du gîte (data.ts) ─────────
 
 export interface Photo {
-  src: string
+  /** Chemin dans public/, ex. "/maison/salon.jpg". */
+  src: PhotoPath
+  /** Description de la photo (lue par les lecteurs d'écran). */
   alt: string
+}
+
+/** Section « Vos hôtes » de l'accueil. */
+export interface Hosts {
+  /** Titre, ex. « Solène & Sylvain ». */
+  names: string
+  /**
+   * Photo ronde (chemin dans public/, ex. "/maison/hotes.jpg").
+   * Sans photo, un cercle avec les initiales s'affiche.
+   */
+  photo?: PhotoPath
+  /** Initiales affichées tant qu'il n'y a pas de photo. */
+  initials: string
+  /** Paragraphes de présentation. */
+  text: string[]
+}
+
+/** Salle de bain (carte affichée sous les chambres). */
+export interface Bathroom {
+  name: string
+  floor: string
+  /** Équipements, ex. « Douche à l'italienne · WC » (facultatif). */
+  details?: string
+  /** Photos (plusieurs = petit carrousel). */
+  photos: PhotoPath[]
 }
 
 export interface Highlight {
@@ -129,7 +156,11 @@ export interface Bedroom {
   name: string
   floor: string
   beds: string
-  photo: string
+  /**
+   * Photos de la chambre (chemins dans public/, ex. "/maison/chambre-rdc.jpg").
+   * Avec plusieurs photos, la carte affiche un petit carrousel.
+   */
+  photos: PhotoPath[]
 }
 
 export interface AmenityGroup {
